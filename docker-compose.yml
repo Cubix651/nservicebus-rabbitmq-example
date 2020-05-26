@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+    rabbitmq:
+        image: rabbitmq:3-management
+        ports:
+            - 5672:5672
+            - 15672:15672
+    sender:
+        build:
+            context: .
+            target: runtime-sender
+        depends_on:
+            - rabbitmq
+    receiver-one:
+        build:
+            context: .
+            target: runtime-receiver
+        depends_on:
+            - rabbitmq
+    receiver-two:
+        build:
+            context: .
+            target: runtime-receiver
+        depends_on:
+            - rabbitmq
